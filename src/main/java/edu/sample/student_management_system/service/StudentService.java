@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.sample.student_management_system.DTO.StudentRequestDto;
+import edu.sample.student_management_system.DTO.StudentResponseDto;
 import edu.sample.student_management_system.Exception.StudentNotFoundException;
 import edu.sample.student_management_system.entity.Student;
 import edu.sample.student_management_system.repository.studentRepositary;
@@ -16,8 +18,23 @@ public class StudentService {
 	private studentRepositary stdRepo;
 	
 	//insert
-	public Student add(Student student) {
-		return stdRepo.save(student);
+	public StudentResponseDto add(StudentRequestDto studentReqDto) {
+		Student student=new Student();
+		student.setFirstName(studentReqDto.getFirstName());
+		student.setLastName(studentReqDto.getLastName());
+		student.setEmail(studentReqDto.getEmail());
+		student.setDepartment(studentReqDto.getDepartment());
+		student.setPhoneNumber(studentReqDto.getPhoneNumber());
+		student.setPercentage(studentReqDto.getPercentage());
+		Student savedStudent=stdRepo.save(student);
+		StudentResponseDto studentResDto=new StudentResponseDto();
+		studentResDto.setStudentId(savedStudent.getStudentId());
+		studentResDto.setFirstName(savedStudent.getFirstName());
+		studentResDto.setLastName(savedStudent.getLastName());
+		studentResDto.setEmail(savedStudent.getEmail());
+		studentResDto.setDepartment(savedStudent.getDepartment());
+		studentResDto.setPercentage(savedStudent.getPercentage());
+		return studentResDto;
 	}
 	//List all
 	public List<Student> getAll(){

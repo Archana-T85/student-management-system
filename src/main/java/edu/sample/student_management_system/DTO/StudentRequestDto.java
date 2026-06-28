@@ -1,38 +1,29 @@
-package edu.sample.student_management_system.entity;
+package edu.sample.student_management_system.DTO;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-@Entity
-public class Student {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long studentId;
-	
+public class StudentRequestDto {
+
 	@NotBlank(message="Name cannot be empty")
 	private String firstName;
 	private String lastName;
 	@Email(message="Invalid email format")
 	@NotBlank(message="Email cannot be empty")
 	private String email;
+	@NotBlank
 	@Pattern(regexp="^[0-9]{10}$",message="Phone number must contain 10 digits")
 	private String phoneNumber;
-	@NotNull(message="department is required")
+	@NotBlank(message="department is required")
 	private String department;
+	@NotNull(message="percentag is not empty")
+	@Min(value=0,message="percentage cannot be less than 0")
+	@Max(value=100,message="percentage cannot be greater than 100")
 	private Long percentage;
-	public Long getStudentId() {
-		return studentId;
-	}
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
-	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -71,5 +62,4 @@ public class Student {
 	}
 	
 	
-
 }

@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PutMapping; 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.sample.student_management_system.DTO.StudentRequestDto;
+import edu.sample.student_management_system.DTO.StudentResponseDto;
 import edu.sample.student_management_system.entity.Student;
 import edu.sample.student_management_system.service.StudentService;
 import jakarta.validation.Valid;
@@ -24,8 +26,8 @@ public class StudentController {
 	public StudentService stdService;
 	
 	@PostMapping
-	public Student insert(@Valid @RequestBody Student student) {
-		return stdService.add(student);
+	public StudentResponseDto insert(@Valid @RequestBody StudentRequestDto studentReqDto) {
+		return stdService.add(studentReqDto);
 	}
 	@GetMapping
 	public List<Student> getAllStudent() {
@@ -46,7 +48,7 @@ public class StudentController {
 	}
 	
 	@PutMapping("/{id}")
-	public Student updateById(@PathVariable Long id, @RequestBody Student student) {
+	public Student updateById(@PathVariable Long id, @Valid @RequestBody Student student) {
 		return stdService.updateById(id,student);
 	}
 }
